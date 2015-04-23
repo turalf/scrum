@@ -12,14 +12,14 @@ import java.sql.SQLException;
  */
 public class DbHelper {
 
-	private static Connection c;
+	private  Connection c;
 
 	/**
 	 * Get a connection to the database
 	 * 
 	 * @return the Connection object to the database
 	 */
-	public static Connection getConnection() {
+	public  Connection getConnection() {
 		String db = "org.sqlite.JDBC";
 		String url = "jdbc:sqlite:./db/scrum";
 		if (c == null) {
@@ -41,7 +41,7 @@ public class DbHelper {
 	/**
 	 * Closes a connection to the database
 	 */
-	public static void closeConnection() {
+	public  void closeConnection() {
 		if (c != null){
 			try {
 				c.close();
@@ -52,7 +52,7 @@ public class DbHelper {
 	}
 
 	public static void main(String... args) {
-		getConnection();
+		new DbHelper().getConnection();
 	}
 
 }

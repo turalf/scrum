@@ -15,9 +15,11 @@ public class StoryDao implements IStoryDao {
 
 	@Override
 	public boolean createStory(long storyID, String description,String state) {
+		//TODO: handling consistency
 		Connection c = null; 
+		DbHelper dbH = new DbHelper();
 		try {
-			c = DbHelper.getConnection();
+			c = dbH.getConnection();
 			String sql = "INSERT INTO STORY(ID,DESCRIPTION,STATE) VALUES(?,?,?)";
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setLong(1, storyID);
@@ -31,7 +33,7 @@ public class StoryDao implements IStoryDao {
 			return false;
 		}
 		finally{
-			DbHelper.closeConnection();
+			dbH.closeConnection();
 		}
 	}
 
@@ -39,9 +41,10 @@ public class StoryDao implements IStoryDao {
 	public List<Story> getUserStories() {
 		Connection c = null;
 		ArrayList<Story> storyList =  new ArrayList<Story>();
+		DbHelper dbH = new DbHelper();
 		try{
 			Statement st = null;
-			c = DbHelper.getConnection();
+			c = dbH.getConnection();
 			String sql = "SELECT ID,DESCRIPTION,STATE FROM STORY";
 			st = c.createStatement();
 			//retrieving form database
@@ -55,22 +58,37 @@ public class StoryDao implements IStoryDao {
 				storyList.add(s);
 			}
 			st.close();
-			return storyList;
 		}
 		catch(SQLException e){
 			//TODO exception
 			e.printStackTrace();
+			return null;
 		}
 		finally{
-			DbHelper.closeConnection();
+			dbH.closeConnection();
 		}
-		return null;
+		return storyList;
 	}
 
 	@Override
 	public boolean deleteStory(long storyId) {
-		// TODO Auto-generated method stub
-		return false;
+		Connection c = null;
+		DbHelper dbH = new DbHelper();
+		try {
+			c = dbH.getConnection();
+			String sql = "DELETE FROM STORY WHERE ID=?";
+			PreparedStatement ps = c.prepareStatement(sql);
+			ps.setLong(1, storyId);
+			ps.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			//TODO: properly hanling exceptions
+			e.printStackTrace();
+			return false;
+		}
+		finally{
+			dbH.closeConnection();
+		}
 	}
 
 }
