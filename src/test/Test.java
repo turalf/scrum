@@ -11,7 +11,13 @@ public class Test {
 		assert(s);
 	}
 	
+	public static void testGetStories(){
+		StoryDao sd = new StoryDao();
+		assert(sd.getUserStories() != null);
+	}
+	
 	public static void main(String ... args){
-		testCreateStory();
+		testGetStories();
+		
 	}
 }
