@@ -15,9 +15,12 @@ public class Story {
 	/**
 	 * When a story object is created an ID for the story must be provided
 	 * @param ID id to be set to the story
+	 * @param description description of the story
 	 */
-	public Story(long ID){
+	public Story(long ID, String description){
 		this.ID = ID;
+		this.description = description;
+		this.state = StoryState.PENDING;
 	}
 	
 	/**

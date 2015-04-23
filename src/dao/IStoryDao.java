@@ -15,9 +15,10 @@ public interface IStoryDao {
 	 * Creates a user story with a given id
 	 * @param storyID id of the user story to be created
 	 * @param description description of the user story
+	 * @param state of the user story
 	 * @return True if story is created, False otherwise
 	 */
-	public boolean createStory(long storyID, String description);
+	public boolean createStory(long storyID, String description, String state);
 	
 	/**
 	 * Retrieves all user stories
