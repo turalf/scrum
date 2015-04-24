@@ -3,7 +3,9 @@ package test;
 import java.util.List;
 
 import dao.StoryDao;
+import dao.TaskDao;
 import model.Story;
+import model.TaskState;
 
 public class Test {
 	public static void testCreateStory(){
@@ -26,7 +28,30 @@ public class Test {
 		sd.deleteStory(12);
 	}
 	
-	public static void main(String ... args){
-		testDeletStory();
+	public static void testCreateTask(){
+		TaskDao td = new TaskDao();
+		td.createTask(12, 2,"test", TaskState.IN_PROCESS.toString());
 	}
+	
+	public static void testGetTasks(){
+		TaskDao td = new TaskDao();
+		List a = td.getTasks(12);
+		System.out.println();
+	}
+	
+	public static void testDeleteTask(){
+		TaskDao t = new TaskDao();
+		t.deleteTask(12, 1);
+	}
+	
+	public static void testUpdateTask(){
+		TaskDao td = new TaskDao();
+		td.updateTask(12, 2, "wqwqwqwq");
+	}
+	
+	public static void main(String ... args){
+		testUpdateTask();
+	}
+	
+	
 }

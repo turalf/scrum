@@ -18,7 +18,7 @@ public interface ITaskDao {
 	 * @param description description of the new task
 	 * @return True if creation is successful, False otherwise
 	 */
-	public boolean createTask(long storyId, long taskId, String description);
+	public boolean createTask(long storyId, long taskId, String description, String state);
 	
 	/**
 	 * Retrieve list of tasks in a given user story
@@ -29,18 +29,18 @@ public interface ITaskDao {
 	
 	/**
 	 * Deletes a task from a user story
+	 * @param storyId id of the story
 	 * @param taskId id of the task
 	 * @return True if successful, False otherwise
 	 */
-	public boolean deleteTask(long taskId);
+	public boolean deleteTask(long storyId, long taskId);
 	
 	/**
 	 * Updates the description of the task
 	 * @param taskId id of the task to be updated
 	 * @param newDescription new description for the task
-	 * @return updated Task object
-	 * @see Task
+	 * @return True in case successful, false otherwise
 	 */
-	public Task updateTask(long taskId, String newDescription);
+	public boolean updateTask(long storyId, long taskId, String newDescription);
 	
 }

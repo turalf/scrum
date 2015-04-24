@@ -32,4 +32,11 @@ public interface IStoryDao {
 	 * @return True if operation is successful, False otherwise
 	 */
 	public boolean deleteStory(long storyId);
+	
+	/**
+	 * Gets the story of the specified ID
+	 * @param storyId story id 
+	 * @return Story object with a specified ID, null if there is no such story
+	 */
+	public Story getStoryByID(long storyId);
 }

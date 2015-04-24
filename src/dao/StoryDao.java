@@ -91,4 +91,36 @@ public class StoryDao implements IStoryDao {
 		}
 	}
 
+	@Override
+	public Story getStoryByID(long storyId) {
+		Connection c = null;
+		DbHelper dbH = new DbHelper();
+		try {
+			c = dbH.getConnection();
+			String sql = "SELECT ID, DESCRIPTION, STATE FROM STORY WHERE ID=?";
+			PreparedStatement ps = c.prepareStatement(sql);
+			ps.setLong(1, storyId);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()){
+				long id  = rs.getLong(1);
+				String description = rs.getString(2);
+				StoryState state = StoryState.valueOf(rs.getString(3));
+				Story s = new Story(id, description);
+				s.setState(state);
+				return s;
+			}
+			else{
+				return null;
+			}
+			
+		} catch (SQLException e) {
+			//TODO: properly hanling exceptions
+			e.printStackTrace();
+			return null;
+		}
+		finally{
+			dbH.closeConnection();
+		}
+	}
+
 }

@@ -16,8 +16,9 @@ public class Task {
 	 * When Task object is created ID must be provided
 	 * @param ID id to be set to the task
 	 */
-	public Task(long ID){
+	public Task(long ID, String description){
 		this.ID = ID;
+		this.description = description;
 	}
 	
 	/**
