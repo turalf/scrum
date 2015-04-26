@@ -187,7 +187,7 @@ public class StoryDao implements IStoryDao {
 			while (rs.next()) {
 				Long ID = rs.getLong(1);
 				String description = rs.getString(2);
-				TaskState state = TaskState.valueOf(rs.getString(3));
+				TaskState state = TaskState.valueP(rs.getString(3));
 				Task t = new Task(ID, description,relatedStory);
 				t.setState(state);
 				taskList.add(t);

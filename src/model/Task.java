@@ -77,7 +77,9 @@ public class Task {
 	
 	
 	/**
-	 * Checks if the task can change its state
+	 * Checks if the task can change its state. The task other than DONE can change its
+	 * state to new state if new state's sequence number is less than or equal to its current state's 
+	 * sequence number plus one
 	 * @param t task to be changed
 	 * @param newState potential new state of the task
 	 * @return true if task state is changeable, false otherwise.
