@@ -76,6 +76,18 @@ public class Task {
 	}
 	
 	
-	
+	/**
+	 * Checks if the task can change its state
+	 * @param t task to be changed
+	 * @param newState potential new state of the task
+	 * @return true if task state is changeable, false otherwise.
+	 */
+	public  boolean canChangeState(TaskState newState){
+		if(this.getState().equals(TaskState.DONE)) return false;
+		else if (newState.getSequenceNumber() <= this.getState().getSequenceNumber() + 1){
+			return true;
+		}
+		return false;
+	}
 	
 }

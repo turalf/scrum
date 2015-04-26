@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 
 import model.Story;
+import model.Task;
 
 /**
  * Data Access Object Interface that contains all CRUD methods for Story 
@@ -46,4 +47,20 @@ public interface IStoryDao {
 	 * @param newDescription new description
 	 */
 	public boolean updateStoryDesc(long storyId,String newDescription);
+	
+	/**
+	 * Updates the state of the story
+	 * @param storyId id of the story to be updated
+	 * @param newState new state of the story
+	 * @return true if successful, false otherwise
+	 */
+	public boolean updateStoryState(long storyId, String newState);
+	
+	/**
+	 * Retrieve list of tasks in a given user story
+	 * @param storyId ID of the story whose tasks are to be retrieved
+	 * @return list of the tasks in the specified story
+	 */
+	public List<Task> getTasks(long storyId);
+	
 }

@@ -21,12 +21,6 @@ public interface ITaskDao {
 	 */
 	public boolean createTask(long storyId, long taskId, String description, String state);
 	
-	/**
-	 * Retrieve list of tasks in a given user story
-	 * @param storyId ID of the story whose tasks are to be retrieved
-	 * @return list of the tasks in the specified story
-	 */
-	public List<Task> getTasks(long storyId);
 	
 	/**
 	 * Deletes a task from a user story
@@ -51,5 +45,14 @@ public interface ITaskDao {
 	 * @return True in case successful, false otherwise
 	 */
 	public boolean moveTask(long storyId, long taskId, String state);
+	
+	/**
+	 * Get the specified task 
+	 * @param storyId story id of the task
+	 * @param taskId task id
+	 * @return the Task object
+	 */
+	public Task getTaskById(long storyId, long taskId);
+
 	
 }

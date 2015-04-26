@@ -10,6 +10,8 @@ import java.util.List;
 
 import model.Story;
 import model.StoryState;
+import model.Task;
+import model.TaskState;
 
 public class StoryDao implements IStoryDao {
 
@@ -74,13 +76,18 @@ public class StoryDao implements IStoryDao {
 		try {
 			c = dbH.getConnection();
 			String sql = "DELETE FROM STORY WHERE ID=?";
+			String sql1 = "DELETE FROM TASK WHERE STORY_ID = ?";
 			PreparedStatement ps = c.prepareStatement(sql);
+			PreparedStatement ps1 = c.prepareStatement(sql1);
 			ps.setLong(1, storyId);
-			ps.executeUpdate();
+			ps1.setLong(1, storyId);
+			int effectedRows = ps.executeUpdate();
+			ps1.executeUpdate();
+			if (effectedRows < 1){
+				return false;
+			}
 			return true;
 		} catch (SQLException e) {
-			//TODO: properly hanling exceptions
-			e.printStackTrace();
 			return false;
 		}
 		finally{
@@ -111,8 +118,6 @@ public class StoryDao implements IStoryDao {
 			}
 			
 		} catch (SQLException e) {
-			//TODO: properly hanling exceptions
-			e.printStackTrace();
 			return null;
 		}
 		finally{
@@ -122,25 +127,79 @@ public class StoryDao implements IStoryDao {
 
 	@Override
 	public boolean updateStoryDesc(long storyId, String newDescription) {
-		//TODO: handling consistency
+		Connection c = null; 
+		DbHelper dbH = new DbHelper();
+		try {
+			c = dbH.getConnection();
+			String sql = "UPDATE STORY SET DESCRIPTION=? WHERE ID=?";
+			PreparedStatement ps = c.prepareStatement(sql);
+			ps.setString(1, newDescription);
+			ps.setLong(2, storyId);
+			int effectedRows = 	ps.executeUpdate();
+			if (effectedRows < 1){
+				return false;
+			}
+			return true;
+		} catch (SQLException e) {
+			return false;
+		}
+		finally{
+			dbH.closeConnection();
+		}
+	}
+
+	@Override
+	public boolean updateStoryState(long storyId, String newState) {
 		Connection c = null; 
 		DbHelper dbH = new DbHelper();
 		try {
 			c = dbH.getConnection();
 			String sql = "UPDATE STORY SET STATE=? WHERE ID=?";
 			PreparedStatement ps = c.prepareStatement(sql);
-			ps.setString(1, newDescription);
+			ps.setString(1, newState);
 			ps.setLong(2, storyId);
-			ps.executeUpdate();
+			int effectedRows = 	ps.executeUpdate();
+			if (effectedRows < 1){
+				return false;
+			}
 			return true;
 		} catch (SQLException e) {
-			//TODO: properly hanling exceptions
-			e.printStackTrace();
 			return false;
 		}
 		finally{
 			dbH.closeConnection();
 		}
+	}
+
+	@Override
+	public List<Task> getTasks(long storyId) {
+		Connection c = null;
+		ArrayList<Task> taskList = new ArrayList<Task>();
+		DbHelper dbH = new DbHelper();
+		try {
+			c = dbH.getConnection();
+			String sql = "SELECT ID,DESCRIPTION,STATE FROM TASK WHERE STORY_ID = ?";
+			PreparedStatement ps = c.prepareStatement(sql);
+			ps.setLong(1, storyId);
+			// retrieving form database
+			ResultSet rs = ps.executeQuery();
+			Story relatedStory = new StoryDao().getStoryByID(storyId);
+			while (rs.next()) {
+				Long ID = rs.getLong(1);
+				String description = rs.getString(2);
+				TaskState state = TaskState.valueOf(rs.getString(3));
+				Task t = new Task(ID, description,relatedStory);
+				t.setState(state);
+				taskList.add(t);
+			}
+		} catch (SQLException e) {
+			// TODO exception
+			e.printStackTrace();
+			return null;
+		} finally {
+			dbH.closeConnection();
+		}
+		return taskList;
 	}
 
 }

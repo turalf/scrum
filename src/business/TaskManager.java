@@ -26,7 +26,7 @@ public class TaskManager {
 	 * @return true if successful, false otherwise
 	 */
 	public static  boolean persistTask(Task t){
-		return td.createTask(t.getRelatedStory().getID(), t.getID(), t.getDescription(), t.getState().toString());
+		return td.createTask(t.getRelatedStory().getID(), t.getID(), t.getDescription(), t.getState().getStoreValue());
 	}
 	
 	/**
@@ -37,7 +37,7 @@ public class TaskManager {
 	 * @return true if successful, false otherwise
 	 */
 	public static boolean updateTask(long storyId, long taskId, TaskState newState){
-		return td.moveTask(storyId, taskId, newState.getStoreValue());
+			return td.moveTask(storyId, taskId, newState.getStoreValue());
 	}
 	
 	/**
@@ -58,13 +58,28 @@ public class TaskManager {
 	public static Story getTaskStory(long storyId){
 		return sd.getStoryByID(storyId);
 	}
+	
+	
+	
+	/**
+	 * Deletes task from persistence 
+	 * @param storyId story id of the task
+	 * @param taskId id of the task
+	 * @return true if successful, false otherwise
+	 */
+	public static boolean deleteTask(long storyId, long taskId){
+		return td.deleteTask(storyId, taskId);
+	}
+	
 	/**
 	 * 
-	 * @param storyId story id for the tasks to be retrieved
-	 * @return the list of tasks in the story
+	 * @param storyId story id of the task
+	 * @param taskId id of the task
+	 * @return relevant task
 	 */
-	public static ArrayList<Task> getTasks(long storyId){
-		return (ArrayList<Task>)td.getTasks(storyId);
+	public static Task getTaskById(long storyId, long taskId){
+		return td.getTaskById(storyId, taskId);
 	}
+	
 	
 }
