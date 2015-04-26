@@ -15,7 +15,6 @@ public class StoryDao implements IStoryDao {
 
 	@Override
 	public boolean createStory(long storyID, String description,String state) {
-		//TODO: handling consistency
 		Connection c = null; 
 		DbHelper dbH = new DbHelper();
 		try {
@@ -28,8 +27,6 @@ public class StoryDao implements IStoryDao {
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			//TODO: properly hanling exceptions
-			e.printStackTrace();
 			return false;
 		}
 		finally{
@@ -51,7 +48,7 @@ public class StoryDao implements IStoryDao {
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()){
 				Long ID = rs.getLong(1);
-				String description = rs.getString(1);
+				String description = rs.getString(2);
 				StoryState state = StoryState.valueOf(rs.getString(3));
 				Story s = new Story(ID, description);
 				s.setState(state);
@@ -117,6 +114,29 @@ public class StoryDao implements IStoryDao {
 			//TODO: properly hanling exceptions
 			e.printStackTrace();
 			return null;
+		}
+		finally{
+			dbH.closeConnection();
+		}
+	}
+
+	@Override
+	public boolean updateStoryDesc(long storyId, String newDescription) {
+		//TODO: handling consistency
+		Connection c = null; 
+		DbHelper dbH = new DbHelper();
+		try {
+			c = dbH.getConnection();
+			String sql = "UPDATE STORY SET STATE=? WHERE ID=?";
+			PreparedStatement ps = c.prepareStatement(sql);
+			ps.setString(1, newDescription);
+			ps.setLong(2, storyId);
+			ps.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			//TODO: properly hanling exceptions
+			e.printStackTrace();
+			return false;
 		}
 		finally{
 			dbH.closeConnection();

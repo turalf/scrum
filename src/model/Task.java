@@ -13,12 +13,16 @@ public class Task {
 	private TaskState state;
 	
 	/**
-	 * When Task object is created ID must be provided
+	 * 
 	 * @param ID id to be set to the task
+	 * @param description description of the task
+	 * @param relatedStory  user story that contains this task
 	 */
-	public Task(long ID, String description){
+	public Task(long ID, String description, Story relatedStory){
 		this.ID = ID;
+		this.relatedStory = relatedStory;
 		this.description = description;
+		this.state = TaskState.TODO;
 	}
 	
 	/**

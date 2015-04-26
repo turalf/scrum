@@ -16,6 +16,7 @@ public interface ITaskDao {
 	 * @param storyId story id which task will be created in
 	 * @param taskId id of the new task
 	 * @param description description of the new task
+	 * @param state state of the task
 	 * @return True if creation is successful, False otherwise
 	 */
 	public boolean createTask(long storyId, long taskId, String description, String state);
@@ -42,5 +43,13 @@ public interface ITaskDao {
 	 * @return True in case successful, false otherwise
 	 */
 	public boolean updateTask(long storyId, long taskId, String newDescription);
+	
+	/**
+	 * Updates the description of the task
+	 * @param taskId id of the task to be updated
+	 * @param newDescription new description for the task
+	 * @return True in case successful, false otherwise
+	 */
+	public boolean moveTask(long storyId, long taskId, String state);
 	
 }

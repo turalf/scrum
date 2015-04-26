@@ -39,4 +39,11 @@ public interface IStoryDao {
 	 * @return Story object with a specified ID, null if there is no such story
 	 */
 	public Story getStoryByID(long storyId);
+
+	/**
+	 * Updates the description of the story
+	 * @param storyId Id of the story to be updated
+	 * @param newDescription new description
+	 */
+	public boolean updateStoryDesc(long storyId,String newDescription);
 }
