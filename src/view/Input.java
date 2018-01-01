@@ -6,40 +6,32 @@ import model.Story;
 import model.StoryState;
 import model.Task;
 import model.TaskState;
-
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-
 import business.StoryManager;
 import business.TaskManager;
-import dao.StoryDao;
 
 public class Input {
-
-	private boolean verifyCommand(String command) {
-		return false;
-
+	
+	/**
+	 * Prints a welcome message to the command line
+	 */
+	public static void printWelcomeMessage(){
+		
+		System.out.println("type \"help\" for list of possible commands");
+		System.out.println("type \"exit\" for exiting from SCRUM shell");
+	}
+	
+	public static void printCommandIntro(){
+		for (HelpMessage hm : HelpMessage.values()){
+			System.out.println(hm.getMessage());
+		}
 	}
 
-	private String[] getCommandParts(String commandStr) {
-		return commandStr.split(" ");
-	}
-
-	public static void main(String... args) throws ParseException {
-		new Input().parseArguments();
-	}
-
-	public void parseArguments() throws ParseException {
+	public static void main(String... args) {
 		Scanner sc = new Scanner(System.in);
-		Options options = new Options();
-		Option o = new Option("create", "create a story or a task");
-		options.addOption(o);
-		StoryDao sd = new StoryDao();
+		printWelcomeMessage();
 
 		while (true) {
-			// splitting a line and escaping quotes to take a description as a
-			// whole
+			// splitting a line and escaping quotes to take a description as  a whole
 			String[] c = sc.nextLine().split("\\s+(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 
 			// getting user input
@@ -207,11 +199,18 @@ public class Input {
 					}
 
 				}
+				else if((c[0].equalsIgnoreCase(Command.HELP.getCommand()))){
+					printCommandIntro();
+				}
+				else if((c[0].equalsIgnoreCase(Command.EXIT.getCommand()))){
+					sc.close();
+					System.exit(0);
+				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				sc.close();
+				System.exit(1);
 			}
 
 		}
 	}
-
 }

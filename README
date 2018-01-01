@@ -1,0 +1,9 @@
+1. Ant is used to build a project.
+	To generate an executable -jar file "ant create_run_jar" command must be executed in the project directory
+2. Above ant command will generate SCRUM.jar file. To run this and to enter the shell "java -jar SCRUM.jar" 
+   must be called
+3. The persistence used in this project is Sqlite. The automatic installation is not provided. Thus, for running the 
+   project Sqlite must already be in the operating system. 
+4. Testings are done with JUnit testing tool. All test methods are inside "test" source directory .
+
+	

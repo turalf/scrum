@@ -91,5 +91,17 @@ public class Task {
 		}
 		return false;
 	}
+
 	
+	/* Overrides equals method. Two Tasks are equal if their id and story id are equal
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj.getClass() != this.getClass()){
+			return false;
+		}
+		Task t = (Task) obj;
+		return (t.ID == this.ID && t.relatedStory.getID() == this.relatedStory.getID());
+	}
 }

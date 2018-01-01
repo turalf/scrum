@@ -7,6 +7,8 @@ package view;
 public enum Command {
 	
 	CREATE("create"),
+	EXIT("exit"),
+	HELP("help"),
 	LIST("list"),
 	DELETE("delete"),
 	COMPLETE("complete"),
@@ -16,6 +18,7 @@ public enum Command {
 	STORIES("stories"),
 	TASK("task"),
 	TASKS("tasks");
+	
 	
 	private final String command;
 	private Command(String command){

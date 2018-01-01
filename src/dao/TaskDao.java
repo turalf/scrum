@@ -17,8 +17,7 @@ import model.TaskState;
 public class TaskDao implements ITaskDao {
 
 	@Override
-	public boolean createTask(long storyId, long taskId, String description,
-			String state) {
+	public boolean createTask(long storyId, long taskId, String description, String state) {
 		Connection c = null;
 		DbHelper dbH = new DbHelper();
 		try {
@@ -32,13 +31,12 @@ public class TaskDao implements ITaskDao {
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return false;
 		} finally {
 			dbH.closeConnection();
 		}
 	}
-
-	
 
 	@Override
 	public boolean deleteTask(long storyId, long taskId) {
@@ -51,7 +49,7 @@ public class TaskDao implements ITaskDao {
 			ps.setLong(1, taskId);
 			ps.setLong(2, storyId);
 			int effectedRows = ps.executeUpdate();
-			if (effectedRows < 1){
+			if (effectedRows < 1) {
 				return false;
 			}
 			return true;
@@ -74,7 +72,7 @@ public class TaskDao implements ITaskDao {
 			ps.setLong(2, taskId);
 			ps.setLong(3, storyId);
 			int effectedRows = ps.executeUpdate();
-			if(effectedRows < 1 ){
+			if (effectedRows < 1) {
 				return false;
 			}
 			return true;
@@ -97,7 +95,7 @@ public class TaskDao implements ITaskDao {
 			ps.setLong(2, taskId);
 			ps.setLong(3, storyId);
 			int effectedRows = ps.executeUpdate();
-			if (effectedRows <  1){
+			if (effectedRows < 1) {
 				return false;
 			}
 			return true;
@@ -107,8 +105,6 @@ public class TaskDao implements ITaskDao {
 			dbH.closeConnection();
 		}
 	}
-
-
 
 	@Override
 	public Task getTaskById(long storyId, long taskId) {
@@ -126,14 +122,14 @@ public class TaskDao implements ITaskDao {
 			ResultSet rs = ps.executeQuery();
 			ResultSet rs2 = ps2.executeQuery();
 			Story relatedStory = null;
-			if(rs2.next()){
+			if (rs2.next()) {
 				relatedStory = new Story(rs2.getLong(1), rs2.getString(2));
 				relatedStory.setState(StoryState.valueOf(rs2.getString(3)));
 			}
-			if (rs.next()){
+			if (rs.next()) {
 				String description = rs.getString(3);
 				TaskState state = TaskState.valueP(rs.getString(4));
-				Task t = new Task(taskId, description,relatedStory);
+				Task t = new Task(taskId, description, relatedStory);
 				t.setState(state);
 				return t;
 			}

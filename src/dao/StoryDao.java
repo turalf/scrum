@@ -59,8 +59,6 @@ public class StoryDao implements IStoryDao {
 			st.close();
 		}
 		catch(SQLException e){
-			//TODO exception
-			e.printStackTrace();
 			return null;
 		}
 		finally{

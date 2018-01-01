@@ -66,5 +66,19 @@ public class Story {
 	}
 
 	
+	/* Overrides equals method. Two stories are equal if their ids are equal
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj.getClass() != this.getClass()){
+			return false;
+		}
+		Story s = (Story) obj;
+		return s.ID == this.ID;
+	}
+
+	
+	
 	
 }
